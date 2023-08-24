@@ -10,7 +10,6 @@ function Layout() {
                 </div>
                 <div className='overflow-y-auto bg-white'>
                     <Header />
-                    {/* <AppRoutes /> */}
                 </div>
             </div>
         </>
