@@ -2,6 +2,13 @@
 module.exports = {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
+        colors: {
+            primary: '#3438CD',
+            grey: '#EFEFEF',
+            white: '#FFFFFF',
+            lightDark: '#6C757D',
+            matteBlack: '#202020',
+        },
         fontFamily: {
             sans: ['Poppins', 'sans-serif'],
         },
@@ -14,6 +21,7 @@ module.exports = {
             },
             boxShadow: {
                 image: '3px 3px 5px 0px rgba(0,0,0,0.15);',
+                outlineBtn: ' 0px 0px 0px 3px rgba(41,132,248,0.2);',
             },
         },
         screens: {
