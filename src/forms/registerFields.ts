@@ -1,4 +1,4 @@
-import { object, string } from 'yup';
+import { object, ref, string } from 'yup';
 import { FieldInterface } from '~/interfaces/field';
 
 export const RegisterFields: FieldInterface[] = [
@@ -23,10 +23,18 @@ export const RegisterFields: FieldInterface[] = [
         value: '',
         type: 'password',
     },
+    {
+        name: 'confirmPassword',
+        label: 'Confirm Password',
+        placeholder: 'Enter the password again',
+        value: '',
+        type: 'password',
+    },
 ];
 
 export const registerSchema = object({
     username: string().required('Username is required'),
     email: string().required('Email is required'),
     password: string().required('Please enter your credentials'),
+    confirmPassword: string().oneOf([ref('password')], 'Passwords must match'),
 }).required();

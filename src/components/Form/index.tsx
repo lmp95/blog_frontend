@@ -8,6 +8,7 @@ import { FilledButton } from '../Button';
 
 function Form({
     initialValues,
+    isLoading = false,
     fields,
     schema,
     formSubmitHandler,
@@ -15,6 +16,7 @@ function Form({
     children,
 }: {
     initialValues?: any;
+    isLoading?: boolean;
     fields: FieldInterface[];
     schema: any;
     formSubmitHandler: Function;
@@ -44,20 +46,11 @@ function Form({
                 {children}
                 {fields.map(({ name, label, type, placeholder, options }) => (
                     <div key={name} className='mb-3'>
-                        <FieldType
-                            value={getValues(name)}
-                            setValue={setValue}
-                            register={register}
-                            options={options}
-                            placeholder={placeholder}
-                            name={name}
-                            label={label}
-                            type={type}
-                        />
+                        <FieldType register={register} placeholder={placeholder} name={name} label={label} type={type} />
                         {errors?.[name] && <p className='text-[10px] pt-[0.1rem] text-red p-0 m-0'>{errors[name]?.message?.toString()}</p>}
                     </div>
                 ))}
-                <FilledButton label={formBtnLabel} isFullWidth />
+                <FilledButton disabled={isLoading} label={formBtnLabel} isFullWidth />
             </form>
         </>
     );
@@ -75,11 +68,8 @@ function FieldType({
     name: string;
     label: string;
     placeholder?: string;
-    options?: any[];
     type: 'text' | 'password' | 'number';
     register: any;
-    value: any;
-    setValue: any;
 }) {
     return <TextInputField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
 }
