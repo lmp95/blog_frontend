@@ -8,6 +8,7 @@ module.exports = {
             white: '#FFFFFF',
             lightDark: '#6C757D',
             matteBlack: '#202020',
+            red: '#E5383B',
         },
         fontFamily: {
             sans: ['Poppins', 'sans-serif'],

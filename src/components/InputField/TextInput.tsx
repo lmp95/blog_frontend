@@ -1,17 +1,20 @@
 import { ComponentPropsWithoutRef, HTMLInputTypeAttribute } from 'react';
 
-function TextInput({ label, type = 'text' }: TextInputProps) {
+function TextInput({ name, label, type = 'text', register, placeholder }: TextInputProps) {
     return (
-        <div className='my-2'>
+        <>
             <p className='text-sm pb-1'>{label}</p>
-            <input type={type} className='p-2 text-sm w-full border-[0.5px] border-lightDark/70 rounded-md' />
-        </div>
+            <input placeholder={placeholder} type={type} {...register?.(name)} className='p-2 text-sm w-full border-[0.5px] border-lightDark/70 rounded-md' />
+        </>
     );
 }
 
 export default TextInput;
 
 interface TextInputProps extends ComponentPropsWithoutRef<'input'> {
+    name: string;
     label: string;
     type?: HTMLInputTypeAttribute;
+    placeholder?: string;
+    register?: any;
 }
