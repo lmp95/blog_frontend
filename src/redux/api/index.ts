@@ -18,4 +18,4 @@ export const appApi = createApi({
     endpoints: () => ({}),
 });
 
-export const apiWithTag = appApi.enhanceEndpoints({});
+export const apiWithTag = appApi.enhanceEndpoints({ addTagTypes: ['Post'] });

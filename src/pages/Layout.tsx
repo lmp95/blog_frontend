@@ -1,5 +1,8 @@
+import { Route, Routes } from 'react-router-dom';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import PostDetail from './PostDetail';
+import Acitivty from './Dashboard';
 
 function Layout() {
     return (
@@ -10,6 +13,12 @@ function Layout() {
                 </div>
                 <div className='overflow-y-auto bg-white'>
                     <Header />
+                    <div className='mt-[75px] p-4'>
+                        <Routes>
+                            <Route path='/' element={<Acitivty />} />
+                            <Route path={`/posts/:id`} element={<PostDetail />} />
+                        </Routes>
+                    </div>
                 </div>
             </div>
         </>
