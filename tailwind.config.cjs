@@ -22,7 +22,8 @@ module.exports = {
             },
             boxShadow: {
                 image: '3px 3px 5px 0px rgba(0,0,0,0.15);',
-                outlineBtn: ' 0px 0px 0px 3px rgba(41,132,248,0.2);',
+                outlineBtn: '0px 0px 0px 3px rgba(41,132,248,0.2);',
+                masonryCard: '0px 0px 0px 4px rgba(175, 175, 175,0.15)',
             },
         },
         screens: {
