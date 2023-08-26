@@ -5,6 +5,7 @@ import { FieldInterface } from '~/interfaces/field';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { TextInputField } from '../InputField';
 import { FilledButton } from '../Button';
+import TextEditor from '../InputField/TextEditor';
 
 function Form({
     initialValues,
@@ -43,13 +44,13 @@ function Form({
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
-                {children}
                 {fields.map(({ name, label, type, placeholder, options }) => (
                     <div key={name} className='mb-3'>
                         <FieldType register={register} placeholder={placeholder} name={name} label={label} type={type} />
                         {errors?.[name] && <p className='text-[10px] pt-[0.1rem] text-red p-0 m-0'>{errors[name]?.message?.toString()}</p>}
                     </div>
                 ))}
+                {children}
                 <FilledButton disabled={isLoading} label={formBtnLabel} isFullWidth />
             </form>
         </>
@@ -68,8 +69,16 @@ function FieldType({
     name: string;
     label: string;
     placeholder?: string;
-    type: 'text' | 'password' | 'number';
+    type: 'text' | 'password' | 'number' | 'textEditor';
     register: any;
 }) {
-    return <TextInputField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
+    switch (type) {
+        case 'text':
+        case 'number':
+        case 'password':
+            return <TextInputField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
+        case 'textEditor':
+            break;
+    }
+    return <TextEditor />;
 }

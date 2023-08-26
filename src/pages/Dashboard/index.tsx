@@ -4,15 +4,16 @@ import { PostInterface } from '~/interfaces/post';
 import { useGetPostsQuery } from '~/redux/api/post';
 
 function Acitivty() {
-    const { isLoading, data } = useGetPostsQuery({ limit: 20, page: 0 });
+    const { isLoading, data, error } = useGetPostsQuery({ limit: 20, page: 0, search: '' });
+
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>Something Wrong...</p>;
 
     return (
         <>
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : (
+            {data && (
                 <Masonry columns={3} gap={20}>
-                    {data?.map((post: PostInterface) => {
+                    {data?.data?.map((post: PostInterface) => {
                         const height = 400 + Math.ceil(Math.random() * 250);
                         return <Post cardHeight={height} post={post} />;
                     })}

@@ -33,5 +33,5 @@ export default Masonry;
 interface MasonryProps {
     columns: number;
     gap: number;
-    children: JSX.Element[];
+    children: any;
 }

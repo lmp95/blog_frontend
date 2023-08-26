@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import AppLogo from '../../assets/logo.png';
-import { IoAlbumsOutline, IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import { IoAlbumsOutline, IoChevronDownOutline, IoChevronUpOutline, IoDocumentTextOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 function Sidebar() {
+    const navigate = useNavigate();
     const [isShow, setIsShow] = useState(false);
 
     return (
@@ -34,11 +36,11 @@ function Sidebar() {
                         </ul>
                     </div>
                     <div>
-                        <li className='cursor-pointer flex items-center gap-3 bg-white px-2 py-4'>
+                        <li onClick={() => navigate('/manage')} className='cursor-pointer flex items-center gap-3 bg-white px-2 py-4'>
                             <span>
-                                <IoAlbumsOutline size={20} />
+                                <IoDocumentTextOutline size={20} />
                             </span>
-                            <p className='flex-1'>Settings</p>
+                            <p className='flex-1'>Manage Posts</p>
                         </li>
                     </div>
                 </ul>
