@@ -15,7 +15,7 @@ function Acitivty() {
                 <Masonry columns={3} gap={20}>
                     {data?.data?.map((post: PostInterface) => {
                         const height = 400 + Math.ceil(Math.random() * 250);
-                        return <Post cardHeight={height} post={post} />;
+                        return <Post key={post?._id} cardHeight={height} post={post} />;
                     })}
                 </Masonry>
             )}

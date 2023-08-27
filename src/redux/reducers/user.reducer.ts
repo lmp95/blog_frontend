@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../stores';
-import { UserInterface } from '../../interfaces';
+import { AuthUserInterface } from '../../interfaces';
 
-const initialState: UserInterface = {
-    token: null,
+const initialState: AuthUserInterface = {
+    _id: null,
     username: null,
+    email: null,
     role: null,
+    token: null,
 };
 
 export const appUserSlice = createSlice({
@@ -13,9 +15,11 @@ export const appUserSlice = createSlice({
     initialState,
     reducers: {
         updateUserInfo: (state, action) => {
-            state.token = action.payload.token;
-            state.username = action.payload.email;
+            state._id = action.payload._id;
+            state.username = action.payload.username;
+            state.email = action.payload.email;
             state.role = action.payload.role;
+            state.token = action.payload.token;
         },
         clearUser: () => initialState,
     },
@@ -25,6 +29,7 @@ export const appUserSlice = createSlice({
 export const tokenSelector = (state: RootState) => state.user.token;
 export const usernameSelector = (state: RootState) => state.user.username;
 export const roleSelector = (state: RootState) => state.user.role;
+export const userSelector = (state: RootState) => state.user;
 
 export const { updateUserInfo, clearUser } = appUserSlice.actions;
 

@@ -28,5 +28,5 @@ export const PostFields: FieldInterface[] = [
 export const postSchema = object({
     title: string().required('Title is required'),
     category: string().required('Category is required'),
-    content: string().required('Post content is required'),
+    content: string().required('Content is required'),
 }).required();

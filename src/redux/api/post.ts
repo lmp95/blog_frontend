@@ -44,14 +44,36 @@ const updatePostApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, 
         invalidatesTags: ['Post'],
     });
 
+const getPostsByAuthorApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>, any, 'api'>) =>
+    builder.query<Response, { authorId: string; limit: number; page: number }>({
+        query: ({ authorId, limit, page }) => ({
+            url: `posts/author/${authorId}`,
+            method: 'GET',
+            params: { limit, page },
+        }),
+        providesTags: ['Post'],
+    });
+
+const deletePostApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>, any, 'api'>) =>
+    builder.mutation<PostInterface, { id: string }>({
+        query: ({ id }) => ({
+            url: `posts/${id}`,
+            method: 'DELETE',
+        }),
+        invalidatesTags: ['Post'],
+    });
+
 export const postApi = appApi.injectEndpoints({
     endpoints: (builder) => ({
         getPosts: getPostsApi(builder),
         getPostDetail: getPostDetailApi(builder),
         addNewPost: createPostApi(builder),
         updatePost: updatePostApi(builder),
+        getPostsByAuthor: getPostsByAuthorApi(builder),
+        deletePost: deletePostApi(builder),
     }),
     overrideExisting: false,
 });
 
-export const { useGetPostsQuery, useGetPostDetailQuery, useAddNewPostMutation, useUpdatePostMutation } = postApi;
+export const { useGetPostsQuery, useDeletePostMutation, useGetPostsByAuthorQuery, useGetPostDetailQuery, useAddNewPostMutation, useUpdatePostMutation } =
+    postApi;

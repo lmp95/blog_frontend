@@ -8,7 +8,11 @@ function Masonry({ columns = 2, gap = 20, children }: MasonryProps) {
 
     for (let i = 0; i < children.length; i++) {
         const columnIndex = i % columns;
-        columnWrapper[`column${columnIndex}`].push(<div style={{ marginBottom: `${gap}px` }}>{children[i]}</div>);
+        columnWrapper[`column${columnIndex}`].push(
+            <div key={i} style={{ marginBottom: `${gap}px` }}>
+                {children[i]}
+            </div>
+        );
     }
 
     for (let i = 0; i < columns; i++) {
