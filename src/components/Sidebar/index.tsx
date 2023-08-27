@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import AppLogo from '../../assets/logo.png';
-import { IoAlbumsOutline, IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import { IoAlbumsOutline, IoChevronDownOutline, IoChevronUpOutline, IoDocumentTextOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { userSelector } from '~/redux/reducers/user.reducer';
 
 function Sidebar() {
+    const navigate = useNavigate();
+    const { token } = useSelector(userSelector);
     const [isShow, setIsShow] = useState(false);
 
     return (
         <div className='flex overflow-hidden flex-col w-full h-full bg-white/80 border-r-[1px] border-matteBlack/10'>
-            <div className='grid place-items-center border-b-[0.5px] h-[75px] border-matteBlack/10'>
+            <div className='grid place-items-center border-b-[0.5px] h-[82px] border-matteBlack/10'>
                 <img src={AppLogo} width='70%' alt='YouKnow' />
             </div>
             <div className='w-full h-full'>
@@ -33,14 +38,16 @@ function Sidebar() {
                             <li className='px-2 py-4'>NodeJS</li>
                         </ul>
                     </div>
-                    <div>
-                        <li className='cursor-pointer flex items-center gap-3 bg-white px-2 py-4'>
-                            <span>
-                                <IoAlbumsOutline size={20} />
-                            </span>
-                            <p className='flex-1'>Settings</p>
-                        </li>
-                    </div>
+                    {token && (
+                        <div>
+                            <li onClick={() => navigate('/manage')} className='cursor-pointer flex items-center gap-3 bg-white px-2 py-4'>
+                                <span>
+                                    <IoDocumentTextOutline size={20} />
+                                </span>
+                                <p className='flex-1'>Manage Posts</p>
+                            </li>
+                        </div>
+                    )}
                 </ul>
             </div>
         </div>

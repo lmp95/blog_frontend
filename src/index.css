@@ -8,3 +8,10 @@ select:focus,
 a:focus {
     outline: none;
 }
+
+.editorClassName {
+    border: 1px solid rgba(175, 175, 175, 0.2);
+    border-radius: 3px;
+    padding-left: .5rem;
+    padding-right: .5rem;
+}

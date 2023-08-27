@@ -1,17 +1,14 @@
 export interface UserInterface {
-    token: string | undefined | null;
+    _id?: string | null;
     username: string | null;
+    email: string | null;
     role: string | null;
 }
 
-export interface LoginInterface {
-    email: string;
-    password: string;
+export interface AuthUserInterface extends UserInterface {
+    token: string | undefined | null;
 }
 
-export interface RegisterUserInterface {
-    username: string;
-    email: string;
+export interface LoginInterface extends UserInterface {
     password: string;
-    role: string;
 }
