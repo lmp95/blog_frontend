@@ -10,13 +10,6 @@ export const PostFields: FieldInterface[] = [
         type: 'text',
     },
     {
-        name: 'category',
-        label: 'Category',
-        placeholder: 'Category',
-        value: '',
-        type: 'text',
-    },
-    {
         name: 'content',
         label: 'Content',
         placeholder: '',

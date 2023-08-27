@@ -4,11 +4,15 @@ import { IoAlbumsOutline, IoChevronDownOutline, IoChevronUpOutline, IoDocumentTe
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { userSelector } from '~/redux/reducers/user.reducer';
+import { useGetCategoriesQuery } from '~/redux/api/category';
+import { CategoryInterface } from '~/interfaces/category';
 
 function Sidebar() {
     const navigate = useNavigate();
     const { token } = useSelector(userSelector);
     const [isShow, setIsShow] = useState(false);
+    const { data, isLoading } = useGetCategoriesQuery();
+    const [selectedCategory, setSelectedCategory] = useState<string>();
 
     return (
         <div className='flex overflow-hidden flex-col w-full h-full bg-white/80 border-r-[1px] border-matteBlack/10'>
@@ -25,18 +29,23 @@ function Sidebar() {
                             <p className='flex-1'>Category</p>
                             <span>{isShow ? <IoChevronUpOutline size={12} /> : <IoChevronDownOutline size={12} />}</span>
                         </li>
-                        <ul className={`bg-grey text-sm ${isShow ? 'max-h-[300px]' : 'max-h-0'} transition-all overflow-y-scroll`}>
-                            <li className='px-2 py-4'>Data Structure</li>
-                            <li className='px-2 py-4'>UI/UX</li>
-                            <li className='px-2 py-4'>Algorithms</li>
-                            <li className='px-2 py-4'>React</li>
-                            <li className='px-2 py-4'>NodeJS</li>
-                            <li className='px-2 py-4'>Data Structure</li>
-                            <li className='px-2 py-4'>UI/UX</li>
-                            <li className='px-2 py-4'>Algorithms</li>
-                            <li className='px-2 py-4'>React</li>
-                            <li className='px-2 py-4'>NodeJS</li>
-                        </ul>
+                        {!isLoading && data && (
+                            <ul className={`bg-lightDark/5 text-sm ${isShow ? 'max-h-[350px]' : 'max-h-0'} transition-all overflow-y-scroll`}>
+                                {data.map(({ _id, name }: CategoryInterface) => (
+                                    <li
+                                        onClick={() => {
+                                            setSelectedCategory(_id);
+                                            navigate('/');
+                                        }}
+                                        className={`${
+                                            selectedCategory === _id ? 'bg-primary text-white' : ''
+                                        } hover:bg-primary hover:text-white text-sm p-4 cursor-pointer`}
+                                    >
+                                        {name}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
                     {token && (
                         <div>
