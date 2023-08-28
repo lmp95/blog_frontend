@@ -9,7 +9,6 @@ const initialState: AppStateInterface = {
         message: null,
     },
     sidebar: false,
-    tab: 'Menu',
 };
 
 export const appStateSlice = createSlice({
@@ -22,8 +21,8 @@ export const appStateSlice = createSlice({
         updateAlertDialog: (state, action) => {
             state.alertDialog = action.payload;
         },
-        updateTab: (state, action) => {
-            state.tab = action.payload;
+        updateSidebar: (state, action) => {
+            state.sidebar = action.payload;
         },
     },
 });
@@ -32,8 +31,7 @@ export const appStateSlice = createSlice({
 export const loadingSelector = (state: RootState) => state.appState.loading;
 export const alertDialogSelector = (state: RootState) => state.appState.alertDialog;
 export const sidebarSelector = (state: RootState) => state.appState.sidebar;
-export const tabSelector = (state: RootState) => state.appState.tab;
 
-export const { updateLoading, updateAlertDialog, updateTab } = appStateSlice.actions;
+export const { updateLoading, updateAlertDialog, updateSidebar } = appStateSlice.actions;
 
 export default appStateSlice.reducer;

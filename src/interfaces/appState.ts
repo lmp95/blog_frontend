@@ -5,5 +5,4 @@ export interface AppStateInterface {
         message?: string | null;
     };
     sidebar: boolean | null;
-    tab: string | null | undefined;
 }

@@ -6,6 +6,7 @@ import { appApi } from '../api';
 
 const reducers = combineReducers({
     user: userReducer,
+    appState: appStateReducer,
     [appApi.reducerPath]: appApi.reducer,
 });
 
