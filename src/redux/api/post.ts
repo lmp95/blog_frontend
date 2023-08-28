@@ -45,7 +45,7 @@ const updatePostApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, 
     });
 
 const getPostsByAuthorApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>, any, 'api'>) =>
-    builder.query<Response, { authorId: string; limit: number; page: number }>({
+    builder.query<Response, { authorId: string | undefined; limit: number; page: number }>({
         query: ({ authorId, limit, page }) => ({
             url: `posts/author/${authorId}`,
             method: 'GET',

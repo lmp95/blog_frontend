@@ -45,8 +45,7 @@ export function Login() {
             .then((payload) => {
                 dispatch(updateUserInfo(payload));
                 navigate('/');
-            })
-            .catch((error) => console.log(error));
+            });
     };
 
     return (
@@ -74,8 +73,7 @@ export function SignUp() {
             .then((payload) => {
                 dispatch(updateUserInfo(payload));
                 navigate('/');
-            })
-            .catch((error) => console.log(error));
+            });
     };
 
     return (

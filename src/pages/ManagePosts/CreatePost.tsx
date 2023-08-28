@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { IconButton } from '~/components/Button';
 import Form from '~/components/Form';
 import { PostFields, postSchema } from '~/forms/postFields';
@@ -22,8 +23,10 @@ function CreatePost() {
     const postCreateHandler = ({ title, category, content, author, status }: PostInterface) => {
         addNewPost({ title, category, content, author: author, status: 'Draft' })
             .unwrap()
-            .then(() => navigate('/'))
-            .catch((error) => console.log(error));
+            .then(() => {
+                toast.success('Post Created Successfully!');
+                navigate('/');
+            });
     };
 
     useEffect(() => {
