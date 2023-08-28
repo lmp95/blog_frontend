@@ -9,10 +9,8 @@ import CreatePost from './ManagePosts/CreatePost';
 function Layout() {
     return (
         <>
-            <div className='grid grid-rows-layout grid-cols-layout w-screen h-screen'>
-                <div className='row-span-2'>
-                    <Sidebar />
-                </div>
+            <div className='grid grid-rows-layout grid-cols-1 sm:grid-cols-layout w-screen h-screen'>
+                <Sidebar />
                 <div className='overflow-y-auto bg-white'>
                     <Header />
                     <div className='mt-[75px] px-8 py-4'>
