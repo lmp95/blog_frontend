@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from '~/components/Button';
-import Dropdown, { DropdownOption } from '~/components/Dropdown';
 import Form from '~/components/Form';
 import { PostFields, postSchema } from '~/forms/postFields';
 import { CategoryInterface } from '~/interfaces/category';
+import { FieldInterface } from '~/interfaces/field';
 import { PostInterface } from '~/interfaces/post';
 import { useGetCategoriesQuery } from '~/redux/api/category';
 import { useAddNewPostMutation } from '~/redux/api/post';
@@ -17,9 +17,10 @@ function CreatePost() {
     const user = useSelector(userSelector);
     const [addNewPost, { isLoading }] = useAddNewPostMutation();
     const { data: categoryList, isLoading: categoryLoading } = useGetCategoriesQuery();
+    const [fields, setFields] = useState<FieldInterface[]>();
 
     const postCreateHandler = ({ title, category, content, author, status }: PostInterface) => {
-        addNewPost({ title, category, content, author: 'Author 1', status: 'Draft' })
+        addNewPost({ title, category, content, author: author, status: 'Draft' })
             .unwrap()
             .then(() => navigate('/'))
             .catch((error) => console.log(error));
@@ -28,6 +29,9 @@ function CreatePost() {
     useEffect(() => {
         if (categoryList) {
             categoryList?.map(({ _id, name }: CategoryInterface) => ({ _id, name }));
+            const fieldId = PostFields.findIndex(({ name }) => name === 'category');
+            PostFields[fieldId].options = categoryList;
+            setFields(PostFields);
         }
     }, [categoryList]);
 
@@ -40,8 +44,7 @@ function CreatePost() {
                 />
             </div>
             {!categoryLoading && categoryList && (
-                <Form isLoading={isLoading} fields={PostFields} formBtnLabel='Create New Post' schema={postSchema} formSubmitHandler={postCreateHandler}>
-                    <Dropdown label='Category' name='category' options={categoryList} placeholder='Select category' />
+                <Form isLoading={isLoading} fields={fields || []} formBtnLabel='Create New Post' schema={postSchema} formSubmitHandler={postCreateHandler}>
                     <p className='text-sm my-4'>Author : {user.username}</p>
                 </Form>
             )}

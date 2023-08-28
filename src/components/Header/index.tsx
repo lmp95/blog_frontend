@@ -22,15 +22,18 @@ function Header() {
             return (
                 <div
                     role='button'
-                    className={`w-[150px] relative hover:bg-lightDark/5 px-2 py-1 rounded-md ${
+                    className={`w-auto sm:w-[150px] relative hover:bg-lightDark/5 px-2 py-1 rounded-md ${
                         username && token ? 'cursor-pointer' : 'cursor-default'
                     } flex flex-row justify-center items-center gap-3`}
                     onClick={() => setShowOptions(!showOptions)}
                 >
                     <IoPersonCircleOutline size={24} className='text-primary/80' />
-                    <p className='text-sm text-primary'>{username}</p>
+                    <p className='text-sm text-primary sm:block hidden'>{username}</p>
+
                     {showOptions && (
-                        <div className='absolute rounded-md bg-white border-[0.5px] border-lightDark/50 w-full max-h-[200px] top-full mt-1 z-50'>
+                        <div className='absolute w-[100px] right-0 flex flex-col items-center justify-center rounded-md bg-white border-[0.5px] border-lightDark/50 sm:w-full max-h-[200px] top-full mt-1 z-50'>
+                            <p className='text-sm text-primary py-2 sm:hidden cursor-default block'>{username}</p>
+                            <div className='w-full h-[0.5px] bg-lightDark/10'></div>
                             <TextButton isFullWidth size='sm' label='Sign Out' onClick={() => logoutHandler()} />
                         </div>
                     )}

@@ -13,7 +13,7 @@ function Layout() {
                 <Sidebar />
                 <div className='overflow-y-auto bg-white'>
                     <Header />
-                    <div className='mt-[75px] px-8 py-4'>
+                    <div className='mt-[85px] px-8 py-4'>
                         <Routes>
                             <Route path='/' element={<Acitivty />} />
                             <Route path={`/posts/:id`} element={<PostDetail isEdit={false} />} />
