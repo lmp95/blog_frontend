@@ -1,12 +1,12 @@
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useEffect, useRef, useState } from 'react';
 
-function Dropdown({ name, label, placeholder, options, register, setValue }: DropdownProps): JSX.Element {
+function Dropdown({ name, label, value, placeholder, options, register, setValue }: DropdownProps): JSX.Element {
     const [showOptions, setShowOptions] = useState(false);
-    const [selectedValue, setSelectedValue] = useState<any>();
+    const [selectedValue, setSelectedValue] = useState<DropdownOption | null>(options.find(({ _id }) => _id === value) || null);
     const ref = useRef<any>();
 
-    const onOptionSelected = (option: any) => {
+    const onOptionSelected = (option: DropdownOption) => {
         setSelectedValue(option);
         setValue && setValue(name, option?._id);
         setShowOptions(false);
@@ -40,16 +40,16 @@ function Dropdown({ name, label, placeholder, options, register, setValue }: Dro
             {showOptions && (
                 <div className={`absolute max-h-[200px] overflow-y-auto z-50 border-[0.5px] bg-white border-lightDark/50 rounded-md mt-16 w-full`}>
                     {options &&
-                        options.map((option) => (
+                        options.map(({ _id, name }) => (
                             <li
                                 className={`${
-                                    selectedValue?.name === option?.name ? 'bg-primary text-white' : 'hover:bg-white/50'
-                                } rounded-[0.25rem] hover:bg-primary hover:text-white list-none text-sm p-2 m-1 cursor-pointer`}
-                                key={option?.name}
-                                value={option?.name}
-                                onClick={() => onOptionSelected(option)}
+                                    selectedValue?.name === name ? 'bg-primary text-white' : 'hover:bg-lightDark/5 hover:text-matteBlack '
+                                } rounded-[0.25rem] list-none text-sm p-2 m-1 cursor-pointer`}
+                                key={name}
+                                value={name}
+                                onClick={() => onOptionSelected({ _id, name })}
                             >
-                                {option?.name}
+                                {name}
                             </li>
                         ))}
                 </div>
@@ -63,6 +63,7 @@ interface DropdownProps {
     label: string;
     placeholder: string;
     options: DropdownOption[];
+    value?: string;
     register?: any;
     setValue?: any;
 }

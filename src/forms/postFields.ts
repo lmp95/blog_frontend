@@ -16,6 +16,14 @@ export const PostFields: FieldInterface[] = [
         value: '',
         type: 'text',
     },
+    {
+        name: 'category',
+        label: 'Category',
+        placeholder: 'Please choose category',
+        value: '',
+        options: [],
+        type: 'dropdown',
+    },
 ];
 
 export const postSchema = object({
