@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { IconButton } from '~/components/Button';
 import Form from '~/components/Form';
 import { PostFields, postSchema } from '~/forms/postFields';
@@ -32,7 +33,10 @@ function PostDetail({ isEdit }: PostDetailProps) {
 
     if (isEdit) {
         const editPostHandler = (formData: PostInterface) => {
-            data?._id && updatePost({ id: data?._id, body: formData });
+            data?._id &&
+                updatePost({ id: data?._id, body: formData })
+                    .unwrap()
+                    .then(() => toast.success('Post Updated Successfully!'));
         };
 
         return (

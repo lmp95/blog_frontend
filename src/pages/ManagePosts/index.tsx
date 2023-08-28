@@ -8,14 +8,13 @@ import { PostInterface } from '~/interfaces/post';
 function ManagePost() {
     const { _id } = useSelector(userSelector);
     const navigate = useNavigate();
-    const { isLoading, data } = useGetPostsByAuthorQuery({ authorId: _id || '', limit: 20, page: 0 });
+    const { isLoading, data } = useGetPostsByAuthorQuery({ authorId: _id || undefined, limit: 20, page: 0 });
     const [deletePost] = useDeletePostMutation();
 
     const postDeleteHandler = (postId: string) => {
         deletePost({ id: postId })
             .unwrap()
-            .then(() => console.log('Post Successfully deleted'))
-            .catch((error) => console.log(error));
+            .then(() => console.log('Post Successfully deleted'));
     };
 
     return (
