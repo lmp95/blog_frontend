@@ -1,68 +1,23 @@
-import { useEffect, useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { IconButton } from '~/components/Button';
-import Form from '~/components/Form';
-import { PostFields, postSchema } from '~/forms/postFields';
-import { CategoryInterface } from '~/interfaces/category';
-import { FieldInterface } from '~/interfaces/field';
-import { PostInterface } from '~/interfaces/post';
-import { useGetCategoriesQuery } from '~/redux/api/category';
-import { useGetPostDetailQuery, useUpdatePostMutation } from '~/redux/api/post';
+import { useGetPostDetailQuery } from '~/redux/api/post';
 
 function PostDetail({ isEdit }: PostDetailProps) {
+    const navigate = useNavigate();
     const { id } = useParams();
     const { data, isLoading } = useGetPostDetailQuery({ id: id || '' });
-    const [updatePost] = useUpdatePostMutation();
-    const navigate = useNavigate();
-    const { data: categoryList, isLoading: categoryLoading } = useGetCategoriesQuery();
-    const [fields, setFields] = useState<FieldInterface[]>();
-
-    useEffect(() => {
-        if (categoryList && data) {
-            categoryList?.map(({ _id, name }: CategoryInterface) => ({ _id, name }));
-            const fieldId = PostFields.findIndex(({ name }) => name === 'category');
-            PostFields[fieldId].options = categoryList;
-            PostFields[fieldId].value = data?.category as string;
-            setFields(PostFields);
-        }
-    }, [categoryList, data]);
 
     if (isLoading) return <p>Loading...</p>;
 
-    if (isEdit) {
-        const editPostHandler = (formData: PostInterface) => {
-            data?._id &&
-                updatePost({ id: data?._id, body: formData })
-                    .unwrap()
-                    .then(() => toast.success('Post Updated Successfully!'));
-        };
-
-        return (
-            <>
-                <div className='mb-4'>
-                    <IconButton
-                        icon={<IoArrowBackOutline size={12} className='group-hover:text-white text-lightDark transition-all' />}
-                        onClick={() => navigate('/manage')}
-                    />
-                </div>
-                {!categoryLoading && (
-                    <Form
-                        initialValues={data}
-                        isLoading={isLoading}
-                        fields={fields || []}
-                        formBtnLabel='Edit'
-                        schema={postSchema}
-                        formSubmitHandler={editPostHandler}
-                    />
-                )}
-            </>
-        );
-    }
-
     return (
         <>
+            <div className='mb-4'>
+                <IconButton
+                    icon={<IoArrowBackOutline size={12} className='group-hover:text-white text-lightDark transition-all' />}
+                    onClick={() => navigate('/')}
+                />
+            </div>
             {data && (
                 <div className='flex flex-col gap-3'>
                     <p className='text-h3'>{data?.title}</p>

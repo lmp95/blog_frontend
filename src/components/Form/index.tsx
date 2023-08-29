@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { ReactNode } from 'react';
 import { FieldInterface } from '~/interfaces/field';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextInputField } from '../InputField';
+import { TextInputField, TextareaField } from '../InputField';
 import { FilledButton } from '../Button';
-import TextEditor from '../InputField/TextEditor';
 import Dropdown, { DropdownOption } from '../Dropdown';
 
 function Form({ initialValues, isLoading = false, fields, schema, formSubmitHandler, formBtnLabel = 'Confirm', children }: FormProps) {
@@ -14,7 +13,6 @@ function Form({ initialValues, isLoading = false, fields, schema, formSubmitHand
         handleSubmit,
         setValue,
         reset,
-        getValues,
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema), defaultValues: initialValues });
 
@@ -59,8 +57,8 @@ function FieldType({ name, label, placeholder, options, type, register, setValue
         case 'number':
         case 'password':
             return <TextInputField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
-        case 'textEditor':
-            return <TextEditor />;
+        case 'textarea':
+            return <TextareaField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
         case 'dropdown':
             return (
                 <Dropdown
@@ -90,7 +88,7 @@ interface FieldTypeProps {
     label: string;
     placeholder?: string;
     options?: DropdownOption[];
-    type: 'text' | 'password' | 'number' | 'textEditor' | 'dropdown';
+    type: 'text' | 'password' | 'number' | 'textarea' | 'dropdown';
     register: any;
     setValue: any;
     value?: string;

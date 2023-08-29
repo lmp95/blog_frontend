@@ -4,8 +4,9 @@ import Sidebar from '../components/Sidebar';
 import PostDetail from './PostDetail';
 import Acitivty from './Dashboard';
 import ManagePost from './ManagePosts';
-import CreatePost from './ManagePosts/CreatePost';
+import CreatePost from './ManagePosts/Post';
 import ProtectedRoute from '~/routes/ProtectedRoutes';
+import Post from './ManagePosts/Post';
 
 function Layout() {
     return (
@@ -17,11 +18,11 @@ function Layout() {
                     <div className='mt-[85px] px-8 py-4'>
                         <Routes>
                             <Route path='/' element={<Acitivty />} />
+                            <Route path={`/posts/:id`} element={<PostDetail isEdit={false} />} />
                             <Route element={<ProtectedRoute />}>
-                                <Route path={`/posts/:id`} element={<PostDetail isEdit={false} />} />
-                                <Route path={`/posts/:id/edit`} element={<PostDetail isEdit={true} />} />
+                                <Route path={`/posts/:id/edit`} element={<Post type='update' />} />
                                 <Route path={`/manage`} element={<ManagePost />} />
-                                <Route path={`/posts`} element={<CreatePost />} />
+                                <Route path={`/posts`} element={<Post type='create' />} />
                             </Route>
                         </Routes>
                     </div>
