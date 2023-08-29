@@ -14,7 +14,7 @@ export const PostFields: FieldInterface[] = [
         label: 'Content',
         placeholder: '',
         value: '',
-        type: 'text',
+        type: 'textarea',
     },
     {
         name: 'category',

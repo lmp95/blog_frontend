@@ -30,7 +30,13 @@ function Dropdown({ name, label, value, placeholder, options, register, setValue
             {label && <p className='text-sm pb-1'>{label}</p>}
             <div className='relative w-full rounded-md flex flex-row' onClick={() => setShowOptions(!showOptions)}>
                 <input id={name} placeholder={placeholder} type='text' {...register?.(name)} disabled hidden />
-                <p id={name} placeholder={placeholder} className={`p-2 text-sm w-full border-[0.5px] border-lightDark/70 rounded-md`}>
+                <p
+                    id={name}
+                    placeholder={placeholder}
+                    className={`p-2 text-sm w-full border-[0.5px] border-lightDark/70 rounded-md ${
+                        selectedValue?.name ? 'text-matteBlack' : 'text-matteBlack/40'
+                    }`}
+                >
                     {selectedValue?.name || placeholder}
                 </p>
                 <span className='absolute right-0 -translate-y-1/2 top-1/2 px-2'>
