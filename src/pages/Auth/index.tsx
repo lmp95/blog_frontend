@@ -1,6 +1,7 @@
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { IconButton } from '~/components/Button';
 import Form from '~/components/Form';
 import { LoginFormFields, loginSchema } from '~/forms/loginFields';
@@ -72,7 +73,8 @@ export function SignUp() {
             .unwrap()
             .then((payload) => {
                 dispatch(updateUserInfo(payload));
-                navigate('/');
+                toast.success('Successfully Created.');
+                navigate('/login');
             });
     };
 

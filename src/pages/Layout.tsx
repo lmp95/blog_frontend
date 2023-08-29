@@ -18,7 +18,7 @@ function Layout() {
                     <div className='mt-[85px] px-8 py-4'>
                         <Routes>
                             <Route path='/' element={<Acitivty />} />
-                            <Route path={`/posts/:id`} element={<PostDetail isEdit={false} />} />
+                            <Route path={`/posts/:id`} element={<PostDetail />} />
                             <Route element={<ProtectedRoute />}>
                                 <Route path={`/posts/:id/edit`} element={<Post type='update' />} />
                                 <Route path={`/manage`} element={<ManagePost />} />

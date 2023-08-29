@@ -29,8 +29,8 @@ function Sidebar() {
             </div>
             <div className='w-full h-full'>
                 <ul>
-                    <div onClick={() => setIsShow(!isShow)}>
-                        <li className='cursor-pointer flex items-center gap-3 bg-white px-2 py-4'>
+                    <div>
+                        <li onClick={() => setIsShow(!isShow)} className='cursor-pointer flex items-center gap-3 bg-white px-2 py-4'>
                             <span>
                                 <IoAlbumsOutline size={20} />
                             </span>
@@ -39,19 +39,20 @@ function Sidebar() {
                         </li>
                         {!isLoading && data && (
                             <ul className={`bg-lightDark/5 text-sm ${isShow ? 'max-h-[350px]' : 'max-h-0'} transition-all overflow-y-scroll`}>
-                                {data.map(({ _id, name }: CategoryInterface) => (
+                                {data.map(({ _id, name, posts }: CategoryInterface) => (
                                     <li
                                         key={_id}
                                         onClick={() => {
                                             dispatch(updateSidebar(false));
                                             setSelectedCategory(_id);
-                                            navigate('/');
+                                            navigate(`/?category=${_id}`);
                                         }}
                                         className={`${
                                             selectedCategory === _id ? 'bg-primary text-white' : ''
-                                        } hover:bg-primary hover:text-white text-sm p-4 cursor-pointer`}
+                                        } hover:bg-primary flex items-center justify-between hover:text-white text-sm p-4 cursor-pointer`}
                                     >
-                                        {name}
+                                        <p className='flex-1'>{name}</p>
+                                        <p className='px-3 py-[2px] text-[12px] bg-lightDark/20 text-white rounded-full'>{posts}</p>
                                     </li>
                                 ))}
                             </ul>

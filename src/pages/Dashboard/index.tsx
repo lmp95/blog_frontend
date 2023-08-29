@@ -1,11 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
+import { IoArrowBackOutline, IoArrowForwardOutline } from 'react-icons/io5';
+import { useSearchParams } from 'react-router-dom';
 import Masonry from '~/components/Masonry';
 import Post from '~/components/Post';
 import { PostInterface } from '~/interfaces/post';
 import { useGetPostsQuery } from '~/redux/api/post';
 
 function Acitivty() {
-    const { isLoading, data, error } = useGetPostsQuery({ limit: 20, page: 0, search: '' });
+    const [page, setPage] = useState<number>(0);
+    const [searchParams] = useSearchParams();
+    const categoryFilter = searchParams.get('category');
+
+    const { isLoading, data, error } = useGetPostsQuery({ limit: 20, page: page, search: '', filter: categoryFilter || '' });
     const handleWindowResize = () => {
         if (window.innerWidth > 1440) return 4;
         if (window.innerWidth > 1024) return 3;
@@ -28,12 +34,31 @@ function Acitivty() {
     return (
         <>
             {data && (
-                <Masonry columns={columns} gap={20}>
-                    {data?.data?.map((post: PostInterface) => {
-                        const height = 400 + Math.ceil(Math.random() * 250);
-                        return <Post key={post?._id} cardHeight={height} post={post} />;
-                    })}
-                </Masonry>
+                <div className='flex flex-col gap-2 max-h-[85vh]'>
+                    <div className='flex-1 overflow-y-scroll'>
+                        <Masonry columns={columns} gap={20}>
+                            {data?.data?.map((post: PostInterface) => {
+                                const height = 400 + Math.ceil(Math.random() * 250);
+                                return <Post key={post?._id} cardHeight={height} post={post} />;
+                            })}
+                        </Masonry>
+                    </div>
+                    <div className='flex items-center justify-between'>
+                        <p className='text-sm mt-4 text-matteBlack/40 font-semibold'>Total - {data?.total}</p>
+                        <div className='flex gap-4'>
+                            <IoArrowBackOutline
+                                onClick={() => page > 0 && setPage((prev) => prev - 1)}
+                                size={28}
+                                className='p-1 rounded-full hover:bg-lightDark/10 cursor-pointer text-primary'
+                            />
+                            <IoArrowForwardOutline
+                                onClick={() => page < data?.total / data?.perPage - 1 && setPage((prev) => prev + 1)}
+                                size={28}
+                                className='p-1 rounded-full hover:bg-lightDark/10 cursor-pointer text-primary'
+                            />
+                        </div>
+                    </div>
+                </div>
             )}
         </>
     );
