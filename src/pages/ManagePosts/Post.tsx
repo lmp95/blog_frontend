@@ -5,7 +5,8 @@ function Post({ type = 'create' }: PostFormProps) {
     let formComponent;
     if (type === 'create') {
         formComponent = <PostCreate />;
-    } else if (type === 'update') {
+    }
+    if (type === 'update') {
         formComponent = <PostUpdate />;
     }
     return formComponent;

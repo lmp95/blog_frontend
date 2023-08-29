@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { ReactNode } from 'react';
 import { FieldInterface } from '~/interfaces/field';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -51,26 +50,18 @@ function Form({ initialValues, isLoading = false, fields, schema, formSubmitHand
 export default Form;
 
 function FieldType({ name, label, placeholder, options, type, register, setValue, value }: FieldTypeProps) {
-    switch (type) {
-        case 'text':
-        case 'number':
-        case 'password':
-            return <TextInputField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
-        case 'textarea':
-            return <TextareaField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
-        case 'dropdown':
-            return (
-                <Dropdown
-                    register={register}
-                    value={value}
-                    setValue={setValue}
-                    label={label}
-                    name={name}
-                    options={options || []}
-                    placeholder={placeholder || ''}
-                />
-            );
+    if (type === 'dropdown') {
+        return (
+            <Dropdown register={register} value={value} setValue={setValue} label={label} name={name} options={options || []} placeholder={placeholder || ''} />
+        );
     }
+    if (type === 'number' || type === 'text' || type === 'password') {
+        return <TextInputField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
+    }
+    if (type === 'textarea') {
+        return <TextareaField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
+    }
+    return null;
 }
 
 interface FormProps {
