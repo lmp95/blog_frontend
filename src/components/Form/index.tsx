@@ -22,7 +22,6 @@ function Form({ initialValues, isLoading = false, fields, schema, formSubmitHand
             result && reset();
         } catch (error) {}
     };
-    const navigate = useNavigate();
 
     return (
         <>

@@ -25,7 +25,7 @@ function PostCreate() {
             .unwrap()
             .then(() => {
                 toast.success('Post Created Successfully!');
-                navigate('/');
+                navigate('/manage');
             });
     };
 

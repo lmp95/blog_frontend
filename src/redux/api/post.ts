@@ -7,10 +7,10 @@ import { PostInterface } from '~/interfaces/post';
 
 const getPostsApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>, any, 'api'>) =>
     builder.query<Response, ListParamsInterface>({
-        query: ({ limit, page, search }) => ({
+        query: ({ limit, filter, page, search }) => ({
             url: 'posts',
             method: 'GET',
-            params: { limit, page, search },
+            params: { limit, page, filter, search },
         }),
         providesTags: ['Post'],
     });
@@ -31,7 +31,7 @@ const createPostApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, 
             method: 'POST',
             body,
         }),
-        invalidatesTags: ['Post'],
+        invalidatesTags: ['Post', 'Category'],
     });
 
 const updatePostApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>, any, 'api'>) =>
@@ -51,7 +51,7 @@ const getPostsByAuthorApi = (builder: EndpointBuilder<BaseQueryFn<string | Fetch
             method: 'GET',
             params: { limit, page },
         }),
-        providesTags: ['Post'],
+        providesTags: ['Post', 'Category'],
     });
 
 const deletePostApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>, any, 'api'>) =>
@@ -60,7 +60,7 @@ const deletePostApi = (builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, 
             url: `posts/${id}`,
             method: 'DELETE',
         }),
-        invalidatesTags: ['Post'],
+        invalidatesTags: ['Post', 'Category'],
     });
 
 export const postApi = appApi.injectEndpoints({

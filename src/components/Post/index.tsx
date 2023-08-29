@@ -1,13 +1,13 @@
 import { PostInterface } from '~/interfaces/post';
 import { TextButton } from '../Button';
 import { useNavigate } from 'react-router-dom';
+import { CategoryInterface } from '~/interfaces/category';
+import { UserInterface } from '~/interfaces';
 
-function Post({ cardHeight, post: { _id, title, category, content } }: PostProps) {
+function Post({ cardHeight, post: { _id, title, category, content, author } }: PostProps) {
     const navigate = useNavigate();
-    let maxLineClamp = 'line-clamp-2';
-    if (cardHeight > 550 && cardHeight < 650) maxLineClamp = 'line-clamp-5';
-    if (cardHeight > 400 && cardHeight < 500) maxLineClamp = 'line-clamp-4';
-    if (cardHeight < 400) maxLineClamp = 'line-clamp-3';
+    const postCategory: CategoryInterface = category as CategoryInterface;
+    const postAuthor: UserInterface = author as UserInterface;
 
     return (
         <div
@@ -17,15 +17,16 @@ function Post({ cardHeight, post: { _id, title, category, content } }: PostProps
         >
             <div className='flex flex-col overflow-hidden'>
                 <img
-                    className='h-[50%]'
+                    className='flex-[0.5]'
                     alt='book'
                     src='https://media.istockphoto.com/id/1146517111/photo/taj-mahal-mausoleum-in-agra.jpg?s=612x612&w=0&k=20&c=vcIjhwUrNyjoKbGbAQ5sOcEzDUgOfCsm9ySmJ8gNeRk='
                 />
                 <p className='text-lg pt-2'>{title}</p>
-                <p className='text-sm text-right py-4'>{category}</p>
-                <p className={`h-auto text-justify ${maxLineClamp}`}>{content}</p>
+                <p className='text-sm text-right pt-2'>{postCategory?.name}</p>
+                <p className={`h-auto text-justify mt-2 flex-[0.4] `}>{content}</p>
             </div>
-            <div className='grid place-items-end my-3'>
+            <div className='flex flex-row items-center justify-between my-3'>
+                <p className='text-sm font-semibold'>Author - {postAuthor?.username}</p>
                 <TextButton label='Read More' size='sm' onClick={() => navigate(`/posts/${_id}`)} />
             </div>
         </div>

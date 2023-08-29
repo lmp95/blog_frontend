@@ -1,4 +1,4 @@
-import PostCreate from './createPost';
+import PostCreate from './CreatePost';
 import PostUpdate from './updatePost';
 
 function Post({ type = 'create' }: PostFormProps) {
