@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { IconButton } from '~/components/Button';
 import Form from '~/components/Form';
+import Checkbox from '~/components/InputField/Checkbox';
 import { PostFields, postSchema } from '~/forms/postFields';
 import { CategoryInterface } from '~/interfaces/category';
 import { FieldInterface } from '~/interfaces/field';
@@ -21,7 +22,7 @@ function PostCreate() {
     const [fields, setFields] = useState<FieldInterface[]>();
 
     const postCreateHandler = ({ title, category, content, author, status }: PostInterface) => {
-        addNewPost({ title, category, content, author: author, status: 'Draft' })
+        addNewPost({ title, category, content, author: author, status: status === 'true' ? 'Published' : 'Draft' })
             .unwrap()
             .then(() => {
                 toast.success('Post Created Successfully!');
