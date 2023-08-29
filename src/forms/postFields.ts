@@ -24,10 +24,17 @@ export const PostFields: FieldInterface[] = [
         options: [],
         type: 'dropdown',
     },
+    {
+        name: 'status',
+        label: 'Published',
+        value: '',
+        type: 'checkbox',
+    },
 ];
 
 export const postSchema = object({
     title: string().required('Title is required'),
     category: string().required('Category is required'),
     content: string().required('Content is required'),
+    status: string(),
 }).required();

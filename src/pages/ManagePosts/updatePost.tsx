@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { IconButton } from '~/components/Button';
+import { DropdownOption } from '~/components/Dropdown';
 import Form from '~/components/Form';
 import { PostFields, postSchema } from '~/forms/postFields';
 import { CategoryInterface } from '~/interfaces/category';
@@ -24,19 +25,26 @@ function PostUpdate() {
 
     useEffect(() => {
         if (categoryList && data) {
-            categoryList?.map(({ _id, name }: CategoryInterface) => ({ _id, name }));
+            const avaialbleCategories: DropdownOption[] = [];
+            categoryList.forEach(({ _id, name }: DropdownOption) => {
+                avaialbleCategories.push({ _id, name });
+            });
+            const category = data?.category as CategoryInterface;
             const fieldId = PostFields.findIndex(({ name }) => name === 'category');
-            PostFields[fieldId].options = categoryList;
-            PostFields[fieldId].value = data?.category as string;
+            PostFields[fieldId].options = avaialbleCategories;
+            PostFields[fieldId].value = category?._id as string;
             setFields(PostFields);
         }
     }, [categoryList, data]);
 
     const editPostHandler = (formData: PostInterface) => {
         data?._id &&
-            updatePost({ id: data?._id, body: formData })
+            updatePost({ id: data?._id, body: { ...formData, status: formData?.status === 'true' ? 'Published' : 'Draft' } })
                 .unwrap()
-                .then(() => toast.success('Post Updated Successfully!'));
+                .then(() => {
+                    toast.success('Post Updated Successfully!');
+                    navigate('/manage');
+                });
     };
 
     return (
@@ -49,7 +57,7 @@ function PostUpdate() {
             </div>
             {!getPostLoading && !categoryLoading && (
                 <Form
-                    initialValues={data}
+                    initialValues={{ ...data, status: data?.status === 'Published', category: (data?.category as CategoryInterface)?._id }}
                     isLoading={updatePostLoading}
                     fields={fields || []}
                     formBtnLabel='Edit'

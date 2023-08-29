@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TextInputField, TextareaField } from '../InputField';
 import { FilledButton } from '../Button';
 import Dropdown, { DropdownOption } from '../Dropdown';
+import Checkbox from '../InputField/Checkbox';
 
 function Form({ initialValues, isLoading = false, fields, schema, formSubmitHandler, formBtnLabel = 'Confirm', children }: FormProps) {
     const {
@@ -28,6 +29,7 @@ function Form({ initialValues, isLoading = false, fields, schema, formSubmitHand
                 {fields.map(({ name, label, type, placeholder, options, value }) => (
                     <div key={name} className='mb-3'>
                         <FieldType
+                            checkboxValue={value}
                             setValue={setValue}
                             value={value}
                             register={register}
@@ -49,7 +51,7 @@ function Form({ initialValues, isLoading = false, fields, schema, formSubmitHand
 
 export default Form;
 
-function FieldType({ name, label, placeholder, options, type, register, setValue, value }: FieldTypeProps) {
+function FieldType({ name, label, placeholder, options, type, checkboxValue, register, setValue, value }: FieldTypeProps) {
     if (type === 'dropdown') {
         return (
             <Dropdown register={register} value={value} setValue={setValue} label={label} name={name} options={options || []} placeholder={placeholder || ''} />
@@ -60,6 +62,9 @@ function FieldType({ name, label, placeholder, options, type, register, setValue
     }
     if (type === 'textarea') {
         return <TextareaField name={name} register={register} label={label} type={type} placeholder={placeholder} />;
+    }
+    if (type === 'checkbox') {
+        return <Checkbox name={name} register={register} label={label} type={type} checkboxValue={checkboxValue} />;
     }
     return null;
 }
@@ -78,8 +83,9 @@ interface FieldTypeProps {
     label: string;
     placeholder?: string;
     options?: DropdownOption[];
-    type: 'text' | 'password' | 'number' | 'textarea' | 'dropdown';
+    type: 'text' | 'password' | 'number' | 'textarea' | 'dropdown' | 'checkbox';
     register: any;
     setValue: any;
+    checkboxValue: string;
     value?: string;
 }
